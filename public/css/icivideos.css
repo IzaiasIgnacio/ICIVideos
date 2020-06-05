@@ -1,0 +1,70 @@
+html, body {
+    background-color: #252830;
+    min-height: 100%;
+}
+.caixa_filtros {
+    background-color: #000;
+    margin-bottom: 3px !important;
+    margin-top: 3px !important;
+    border-radius: 3px;
+    color: #fff !important;
+    padding: 0px 10px 10px 10px;
+}
+.caixa_filtros .label {
+    color: #fff !important;
+}
+body > .container, .navbar > .container {
+    max-width: 70%;
+}
+.tknz-input-wrapper {
+    position: unset !important;
+}
+.tabela_videos tbody {
+    color: #fff;
+}
+.tabela_videos tbody tr:nth-child(even) {
+    background-color: #3b0b7b;
+}
+.tabela_videos tbody tr:nth-child(odd) {
+    background-color: #000;
+}
+.caixa_filtros legend {
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    width: 100%;
+}
+.valor_periodo {
+    width: 20px;
+    float: left;
+}
+.title {
+    color: #fff;
+}
+.modal-card-title {
+    color: #fff;
+}
+.modal-card-head {
+    background-color: #000;
+}
+.modal-card-body {
+    background-color: #252830;
+}
+.modal-card-foot {
+    background-color: #000;
+    justify-content: space-between;
+}
+.modal-card {
+    height: 70%;
+    width: 70%;
+    margin-top: -150px;
+}
+.modal-card-body .label {
+    color: #fff;
+}
+.dados_video {
+    color: #ddd;
+    font-style: italic;
+}
+.icones i {
+    cursor: pointer;
+}
