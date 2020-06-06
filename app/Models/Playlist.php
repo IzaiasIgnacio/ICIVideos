@@ -18,19 +18,30 @@ class Playlist extends Model {
         $busca = Video::query();
 
         if (!empty($filtros['categorias'])) {
-            $busca->join('categoria', 'categoria.id', 'video.id_categoria')
-                        ->whereIn('categoria.nome', $filtros['categorias']);
+            $busca->whereIn('id_categoria', $filtros['categorias']);
         }
 
         if (!empty($filtros['artistas'])) {
             $busca->join('video_artista', 'video_artista.id_video', 'video.id')
-                    ->join('artista', 'artista.id', 'video_artista.id_artista')
-                        ->whereIn('artista.nome', $filtros['artistas']);
+                        ->whereIn('video_artista.id_artista', $filtros['artistas']);
+        }
+        
+        if (!empty($filtros['tags'])) {
+            $busca->join('video_tag', 'video_tag.id_video', 'video.id')
+                        ->whereIn('video_tag.id_tag', $filtros['tags']);
+        }
+        
+        if (!empty($filtros['musicas'])) {
+            $busca->join('video_musica', 'video_musica.id_video', 'video.id')
+                        ->whereIn('video_musica.id_musica', $filtros['artistas']);
         }
 
-        if (!empty($filtros['tipos'])) {
-            $busca->join('tipo', 'tipo.id', 'video.id_tipo')
-                        ->whereIn('tipo.nome', $filtros['tipos']);
+        if (isset($filtros['tipos']) && count($filtros['tipos']) > 0) {
+            $busca->whereIn('video.id_tipo', $filtros['tipos']);
+        }
+        
+        if ($filtros['favoritos'] != 'false') {
+            $busca->where('video.favorito', 1);
         }
 
         $videos = $busca->get();

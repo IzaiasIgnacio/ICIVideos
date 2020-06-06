@@ -40,7 +40,7 @@ class Video extends Model {
 				->join('artista', 'video_artista.id_artista', 'artista.id')
 				->join('tipo', 'video.id_tipo', 'tipo.id')
 					->orderByDesc('data_arquivo')
-						// ->take(10)
+						->take(50)
 							->get();
 	}
 

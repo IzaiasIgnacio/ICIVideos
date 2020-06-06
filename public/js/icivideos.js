@@ -47,8 +47,24 @@ $().ready(function() {
     });
 
     $(".gerar_playlist").click(function() {
-        $.post('/ICIVideos/public/ajax/gerar_playlist', {nome: $("#nome_playlist").val(), categorias: $("#categorias").tokenizer('get'),
-        artistas: $("#artistas").tokenizer('get')},
+        var tipos = [];
+        if ($("#mv").is(':checked')) {
+            tipos.push($("#mv").val());
+        }
+        if ($("#live").is(':checked')) {
+            tipos.push($("#live").val());
+        }
+        if ($("#misc").is(':checked')) {
+            tipos.push($("#misc").val());
+        }
+        $.post('/ICIVideos/public/ajax/gerar_playlist', {
+        nome: $("#nome_playlist").val(),
+        categorias: $("#categorias").val(),
+        artistas: $("#artistas").val(),
+        tags: $("#tags").val(),
+        musicas: $("#musicas").val(),
+        tipos: tipos,
+        favoritos: $("#favoritos").is(":checked")},
         function(resposta) {
             console.log(resposta);
         });

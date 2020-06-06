@@ -27,6 +27,15 @@ Route::prefix('/storage')->group(function () {
 });
 
 Route::get('teste', function () {
+    $img = \Intervention\Image\Facades\Image::make(Storage::disk('public')->url('capturas/1_1.png'))->resize(300, 200);
+
+    $img->save('I:/xampp/htdocs/ICIVideos/storage/app/public/capturas/1_11.png');
+    // $largura1 = 640;
+    // $largura2 = 400;//Largura nova
+    // $prop = (100*$largura2/$largura1)/100;
+    // echo 'Largura: '.$prop*$largura1.'<BR>'; //Aqui óbvio vai dar 400
+    // echo 'Altura: '.$prop*480; //Aqui vai dar 300
+    die;
     // $st = new App\Http\Controllers\StorageController();
     $video = App\Models\Video::find(1);
     $info = pathinfo($video->buscarCaminhoCompleto());

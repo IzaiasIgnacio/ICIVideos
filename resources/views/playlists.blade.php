@@ -17,36 +17,34 @@
                 </div>
             </div>
             <div class='column is-3'>
-                <label class="label">Data Inicial</label>
+                <label class="label">Músicas</label>
                 <div class="control">
-                    <input type='text' id='data_inicial' name='data_inicial'>
-                </div>
-                <label class="label">Data Final</label>
-                <div class="control">
-                    <input type='text' id='data_final' name='data_final'>
+                    {{Form::select('musicas', $musicas, null, ['placeholder' => 'Músicas', 'id' => 'musicas'])}}
                 </div>
                 <label class="label">Tags</label>
                 <div class="control">
                     {{Form::select('tags', $tags, null, ['placeholder' => 'Tags', 'id' => 'tags'])}}
                 </div>
                 <label class="checkbox label">
-                    <input type="checkbox"> Live
-                    <input type="checkbox"> Mv
-                    <input type="checkbox"> Misc
-                    <input type="checkbox"> Favoritos
+                    <input type="checkbox" name="live" id="live" value="{{App\Models\Tipo::where('nome', 'Live')->first()->id}}"> Live
+                    <input type="checkbox" name="mv" id="mv" value="{{App\Models\Tipo::where('nome', 'MV')->first()->id}}"> Mv
+                    <input type="checkbox" name="misc" id="misc" value="{{App\Models\Tipo::where('nome', 'Misc')->first()->id}}"> Misc
+                    <input type="checkbox" name="favoritos" id="favoritos"> Favoritos
                 </label>
             </div>
             <div class='column is-3'>
-                <label class="label">Músicas</label>
-                <div class="control">
-                    {{Form::select('musicas', $musicas, null, ['placeholder' => 'Músicas', 'id' => 'musicas'])}}
-                </div>
                 <label class="label">Resolução mínima</label>
                 <div class="control">
                     <input type='text' id='resolucao' name='resolucao'>
                 </div>
-                <label class="label">Período</label>
-                <div class="control">
+                <label class="label">Data</label>
+                <label class="radio">
+                    <input type="radio" name="tipo_data">
+                    <input type='text' id='data_inicial' name='data_inicial'>
+                </label>
+                <br>
+                <label class="radio">
+                    <input type="radio" name="tipo_data">
                     <input type='text' id='valor_periodo' name='valor_periodo'>
                     <div class="select is-small">
                         <select>
@@ -55,7 +53,7 @@
                             <option>Anos</option>
                         </select>
                     </div>
-                </div>
+                </label>
             </div>
             <div class='column is-3'>
                 <label class="label">Tags</label>

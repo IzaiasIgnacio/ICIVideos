@@ -16,9 +16,6 @@ html, body {
 body > .container, .navbar > .container {
     max-width: 70%;
 }
-.tknz-input-wrapper {
-    position: unset !important;
-}
 .tabela_videos tbody {
     color: #fff;
 }
@@ -33,9 +30,11 @@ body > .container, .navbar > .container {
     border-bottom: 1px solid #fff;
     width: 100%;
 }
-.valor_periodo {
-    width: 20px;
-    float: left;
+#valor_periodo {
+    width: 25px;
+}
+.radio+.radio {
+    margin-left: 0 !important;
 }
 .title {
     color: #fff;
@@ -67,4 +66,7 @@ body > .container, .navbar > .container {
 }
 .icones i {
     cursor: pointer;
+}
+.icones .column {
+    text-align: center;
 }
