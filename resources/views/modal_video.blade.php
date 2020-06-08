@@ -78,6 +78,16 @@
                                 <img src="" class='captura_6'>
                             </figure>
                         </div>
+                        <div class="column is-6">
+                            <figure class="image is-16by9">
+                                <img src="" class='captura_7'>
+                            </figure>
+                        </div>
+                        <div class="column is-6">
+                            <figure class="image is-16by9">
+                                <img src="" class='captura_8'>
+                            </figure>
+                        </div>
                     </div>
                 </div>
                 <div class="column is-4">
@@ -87,11 +97,11 @@
                     </div>
                     <div class="field">
                         <label class="label">Músicas</label>
-                        <input class="input" type="text" placeholder="Músicas">
+                        {{Form::select('musicas_modal', $musicas, null, ['placeholder' => 'Músicas', 'id' => 'musicas_modal'])}}
                     </div>
                     <div class="field">
                         <label class="label">Tags</label>
-                        <input class="input" type="text" placeholder="Tags">
+                        {{Form::select('tags_modal', $tags, null, ['placeholder' => 'Tags', 'id' => 'tags_modal'])}}
                     </div>
                 </div>
             </div>

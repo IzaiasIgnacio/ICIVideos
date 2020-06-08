@@ -13,9 +13,6 @@ html, body {
 .caixa_filtros .label {
     color: #fff !important;
 }
-body > .container, .navbar > .container {
-    max-width: 70%;
-}
 .tabela_videos tbody {
     color: #fff;
 }
@@ -54,7 +51,7 @@ body > .container, .navbar > .container {
 }
 .modal-card {
     height: 70%;
-    width: 70%;
+    width: 53%;
     margin-top: -150px;
 }
 .modal-card-body .label {
@@ -69,4 +66,18 @@ body > .container, .navbar > .container {
 }
 .icones .column {
     text-align: center;
+}
+.input_form {
+    height: 2.3em;
+    border-radius: 3px !important;
+}
+.radio .input_form {
+    width: 40%;
+}
+.calendar-table table thead tr:nth-child(2) {
+    display: none;
+}
+.caixa_filtros h2 {
+    text-align: center;
+    border-bottom: 1px solid #fff;
 }

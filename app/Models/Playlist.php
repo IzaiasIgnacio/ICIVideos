@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class Playlist extends Model {
 
@@ -44,6 +45,10 @@ class Playlist extends Model {
             $busca->where('video.favorito', 1);
         }
 
+        if (!empty($filtros['resolucao'])) {
+            $busca->where(DB::connection('icivideos')->raw("substr(resolucao, locate('X', resolucao)+1)"), '>=',(int) $filtros['resolucao']);
+        }
+
         $videos = $busca->get();
 
         $caminhos = array();
@@ -57,6 +62,7 @@ class Playlist extends Model {
         $playlist = Playlist::firstOrCreate([
             'nome' => $filtros['nome']
         ]);
+
         unset($filtros['nome']);
         $playlist->filtros = \json_encode($filtros->all());
         $playlist->save();
@@ -64,15 +70,31 @@ class Playlist extends Model {
         return 'ok';
     }
 
-    public static function buscarPlaylists() {
+    public function buscarPlaylists() {
         $playlists = Playlist::get();
         
         foreach ($playlists as $playlist) {
             $filtros = json_decode($playlist['filtros'], true);
-            $playlist->artistas = @implode(", ", $filtros['artistas']);
+
+            $playlist = $this->buscarvaloresFiltros($filtros, $playlist);
         }
         
         return $playlists;
+    }
+
+    private function buscarvaloresFiltros($filtros, $playlist) {
+        $playlist->favoritos = ($filtros['favoritos'] == "true") ? 'Sim' : 'Não';
+        $playlist->resolucao = @$filtros['resolucao'];
+
+        unset($filtros['favoritos']);
+        unset($filtros['resolucao']);
+        
+        foreach ($filtros as $chave => $valores) {
+            $classe = "\App\Models\\".ucfirst(substr($chave, 0, -1));
+            $playlist->$chave = implode(", ", $classe::find($valores)->pluck('nome')->toArray());
+        }
+        
+        return $playlist;
     }
     
 }

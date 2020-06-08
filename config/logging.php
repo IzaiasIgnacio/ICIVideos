@@ -41,6 +41,12 @@ return [
             'ignore_exceptions' => false,
         ],
 
+        'videos' => [
+            'driver' => 'single',
+            'path' => storage_path('logs/laravel_videos.log'),
+            'level' => 'debug',
+        ],
+
         'single' => [
             'driver' => 'single',
             'path' => storage_path('logs/laravel.log'),

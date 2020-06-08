@@ -24,7 +24,7 @@
                 </td>
                 <td><i>{{$video->artista}}</i><br>{{$video->titulo}}</td>
                 <td>{{$video->tipo}}</td>
-                <td>{{$video->data_arquivo}}</td>
+                <td>{{date('d/m/Y', strtotime($video->data_arquivo))}}</td>
                 <td>
                     <input type='hidden' class='id_video' value='{{$video->id}}' />
                     <div class="columns is-multiline icones">

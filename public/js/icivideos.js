@@ -41,6 +41,8 @@ $().ready(function() {
             $(".captura_4").attr('src', resposta.capturas[4]);
             $(".captura_5").attr('src', resposta.capturas[5]);
             $(".captura_6").attr('src', resposta.capturas[6]);
+            $(".captura_7").attr('src', resposta.capturas[7]);
+            $(".captura_8").attr('src', resposta.capturas[8]);
             $(".modal-card-title").html(resposta.titulo);
             $("#modal_video").addClass('is-active');
         });
@@ -64,7 +66,8 @@ $().ready(function() {
         tags: $("#tags").val(),
         musicas: $("#musicas").val(),
         tipos: tipos,
-        favoritos: $("#favoritos").is(":checked")},
+        favoritos: $("#favoritos").is(":checked"),
+        resolucao: $("#resolucao").val()},
         function(resposta) {
             console.log(resposta);
         });
@@ -77,7 +80,24 @@ $().ready(function() {
         maxOptions: 10,
         maxItems: null,
         hideSelected: true,
-        closeAfterSelect: true
+        closeAfterSelect: true,
+        valueField: 'id'
+    };
+
+    var options_modal = {
+        create: true,
+        highlight: true,
+        openOnFocus: false,
+        maxOptions: 10,
+        maxItems: null,
+        hideSelected: true,
+        closeAfterSelect: true,
+        valueField: 'id',
+        render: {
+            option_create: function() {
+                return "<div class='create'></div>";
+            }
+        }
     };
 
     $('#categorias').selectize(options);
@@ -87,5 +107,43 @@ $().ready(function() {
     $('#artistas_remover').selectize(options);
     $('#tags_remover').selectize(options);
     $('#musicas_remover').selectize(options);
+
+    $('#musicas_modal').selectize(options_modal);
+    $('#tags_modal').selectize(options_modal);
+
+    $('.campo_data').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoApply: true,
+        locale: {
+            "format": "DD/MM/YYYY",
+            "daysOfWeek": [
+                "Dom",
+                "Seg",
+                "Ter",
+                "Qua",
+                "Qui",
+                "Sex",
+                "Sáb"
+            ],
+            "monthNames": [
+                "Janeiro",
+                "Fevereiro",
+                "Março",
+                "Abril",
+                "Maio",
+                "Junho",
+                "Julho",
+                "Agosto",
+                "Setembro",
+                "Outubro",
+                "Novembro",
+                "Dezembro"
+            ],
+            "firstDay": 1
+        }
+    });
+
+    $('.campo_data').val('');
 
 });

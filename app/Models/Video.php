@@ -39,7 +39,7 @@ class Video extends Model {
 				->join('video_artista', 'video_artista.id_video', 'video.id')
 				->join('artista', 'video_artista.id_artista', 'artista.id')
 				->join('tipo', 'video.id_tipo', 'tipo.id')
-					->orderByDesc('data_arquivo')
+					->orderByDesc('video.data_arquivo')
 						->take(50)
 							->get();
 	}
@@ -64,6 +64,8 @@ class Video extends Model {
 			4 => $this->buscarCaptura(4), 
 			5 => $this->buscarCaptura(5), 
 			6 => $this->buscarCaptura(6), 
+			7 => $this->buscarCaptura(7), 
+			8 => $this->buscarCaptura(8) 
 		];
 
 		return $video;

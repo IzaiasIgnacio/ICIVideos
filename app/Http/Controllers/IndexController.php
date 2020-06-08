@@ -14,17 +14,21 @@ class IndexController extends Controller {
     public function exibirVideos() {
         return view('index', [
             'videos' => Video::buscarVideosIndex(),
+            'musicas' => Musica::get()->pluck('titulo', 'id'),
+            'tags' => Tag::get()->pluck('nome', 'id'),
             'pagina' => 'videos'
         ]);
     }
 
     public function exibirPlaylists() {
+        $playlist = new Playlist();
+
         return view('index', [
-            'categorias' => Categoria::get()->pluck('nome'),
-            'artistas' => Artista::get()->pluck('nome'),
-            'tags' => Tag::get()->pluck('nome'),
-            'musicas' => Musica::get()->pluck('titulo'),
-            'playlists' => Playlist::buscarPlaylists(),
+            'categorias' => Categoria::get()->pluck('nome', 'id'),
+            'artistas' => Artista::get()->pluck('nome', 'id'),
+            'tags' => Tag::get()->pluck('nome', 'id'),
+            'musicas' => Musica::get()->pluck('titulo', 'id'),
+            'playlists' => $playlist->buscarPlaylists(),
             'pagina' => 'playlists'
         ]);
     }

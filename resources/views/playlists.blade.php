@@ -5,7 +5,7 @@
             <div class='column is-3'>
                 <label class="label">Nome</label>
                 <div class="control">
-                    <input type='text' id='nome_playlist' name='nome_playlist'>
+                    <input type='text' class='input input_form' id='nome_playlist' name='nome_playlist' placeholder='Nome'>
                 </div>
                 <label class="label">Categorias</label>
                 <div class="control">
@@ -33,29 +33,31 @@
                 </label>
             </div>
             <div class='column is-3'>
-                <label class="label">Resolução mínima</label>
+                <label class="label">Resolução vertical mínima</label>
                 <div class="control">
-                    <input type='text' id='resolucao' name='resolucao'>
+                    <input type='text' class='input input_form' id='resolucao' name='resolucao' placeholder='Resolução'>
                 </div>
                 <label class="label">Data</label>
                 <label class="radio">
                     <input type="radio" name="tipo_data">
-                    <input type='text' id='data_inicial' name='data_inicial'>
+                    <input type='text' class='input is-small input_form campo_data' id='data_inicial' name='data_inicial' placeholder='Data inicial'>
+                    <input type='text' class='input is-small input_form campo_data' id='data_final' name='data_final' placeholder='Data final'>
                 </label>
                 <br>
                 <label class="radio">
                     <input type="radio" name="tipo_data">
-                    <input type='text' id='valor_periodo' name='valor_periodo'>
+                    <input type='text' class='input is-small input_form' id='valor_periodo' name='valor_periodo'  placeholder='X'>
                     <div class="select is-small">
                         <select>
+                            <option>Anos</option>
                             <option>Dias</option>
                             <option>Meses</option>
-                            <option>Anos</option>
                         </select>
                     </div>
                 </label>
             </div>
             <div class='column is-3'>
+                <h2>Remover da playlist</h2>
                 <label class="label">Tags</label>
                 <div class="control">
                     {{Form::select('tags_remover', $tags, null, ['placeholder' => 'Tags', 'id' => 'tags_remover'])}}
@@ -85,7 +87,7 @@
             <th>Tags</th>
             <th>Favoritos</th>
             <th>Músicas</th>
-            <th>Resoluções</th>
+            <th>Resolução mínima</th>
             <th>Ações</th>
         <tr>
     <thead>
@@ -93,13 +95,13 @@
         @foreach ($playlists as $playlist)
         <tr>
             <td>{{$playlist->nome}}</td>
-            <td></td>
+            <td>{{$playlist->categorias}}</td>
             <td>{{$playlist->artistas}}</td>
+            <td>{{$playlist->tipos}}</td>
             <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td>{{$playlist->favoritos}}</td>
+            <td>{{$playlist->musicas}}</td>
+            <td>{{$playlist->resolucao}}</td>
             <td></td>
         </tr>
         @endforeach

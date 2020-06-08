@@ -26,10 +26,33 @@ Route::prefix('/storage')->group(function () {
     Route::get('/atualizar_video/{id}', 'StorageController@atualizarVideoStorage')->name('atualizar_video_storage');
 });
 
-Route::get('teste', function () {
-    $img = \Intervention\Image\Facades\Image::make(Storage::disk('public')->url('capturas/1_1.png'))->resize(300, 200);
+Route::get('teste2', function () {
+    $video = App\Models\Video::find(434);
+    $info = pathinfo($video->buscarCaminhoCompleto());
+    $st = new \App\Http\Controllers\StorageController();
+    echo $st->gerarCapturas($video);
+});
 
-    $img->save('I:/xampp/htdocs/ICIVideos/storage/app/public/capturas/1_11.png');
+Route::get('teste', function () {
+    $videos = App\Models\Video::where('id', '>', 1067)->get();
+    foreach ($videos as $video) { 
+        $c = new \App\Http\Controllers\StorageController();
+        $c->gerarCapturas($video);
+    }
+    die;
+
+    $captura = \Intervention\Image\Facades\Image::make(Storage::disk('public')->url('capturas/'.$video->id.'_1.png'));
+    
+    $altura_original = $captura->height();
+    $largura_original = $captura->width();
+    $proporcao = ($largura_original/$altura_original);
+    $altura_nova = 720;
+    $largura_nova = $altura_nova * $proporcao;
+    
+    $captura->resize($largura_nova, $altura_nova);
+
+    Storage::disk('public')->put('capturas/'.$video->id.'_11.png', $captura->encode());
+    // $captura->save();
     // $largura1 = 640;
     // $largura2 = 400;//Largura nova
     // $prop = (100*$largura2/$largura1)/100;
