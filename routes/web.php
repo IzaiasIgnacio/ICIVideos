@@ -19,6 +19,10 @@ Route::get('/playlists', 'IndexController@exibirPlaylists')->name('exibir_playli
 Route::prefix('/ajax')->group(function () {
     Route::post('/gerar_playlist', 'AjaxController@gerarPlaylist')->name('gerar_playlist');
     Route::post('/dados_video_modal', 'AjaxController@buscarDadosVideoModal')->name('dados_video_modal');
+    Route::post('/salvar_video', 'AjaxController@salvarVideo')->name('salvar_video');
+    Route::post('/play', 'AjaxController@play')->name('play');
+    Route::post('/favorito', 'AjaxController@favorito')->name('favorito');
+    Route::post('/filtrar_videos', 'AjaxController@filtrarVideos')->name('filtrar_videos');
 });
 
 Route::prefix('/storage')->group(function () {

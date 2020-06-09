@@ -91,9 +91,10 @@
                     </div>
                 </div>
                 <div class="column is-4">
+                    <input type='hidden' name='id_video' id='id_video'>
                     <div class="field">
                         <label class="label">Título</label>
-                        <input class="input" type="text" placeholder="Título">
+                        <textarea class="input" name='titulo_tratado' id='titulo_tratado' placeholder="Título" style='height: 88px'></textarea>
                     </div>
                     <div class="field">
                         <label class="label">Músicas</label>
@@ -103,16 +104,20 @@
                         <label class="label">Tags</label>
                         {{Form::select('tags_modal', $tags, null, ['placeholder' => 'Tags', 'id' => 'tags_modal'])}}
                     </div>
+                    <div class="field">
+                        <label class="label">Artistas</label>
+                        {{Form::select('artistas_modal', $artistas, null, ['placeholder' => 'Artistas', 'id' => 'artistas_modal'])}}
+                    </div>
                 </div>
             </div>
         </section>
         <footer class="modal-card-foot">
+            <button class="button is-pulled-right is-danger btn_excluir">Excluir</button>
             <div>
+                <label class='label_progresso'></label>
                 <button class="button is-link btn_salvar">Salvar</button>
                 <button class="button is-light btn_cancelar">Cancelar</button>
-                <label class='label_progresso'></label>
             </div>
-            <button class="button is-pulled-right is-danger btn_excluir">Excluir</button>
         </footer>
     </div>
 </div>
