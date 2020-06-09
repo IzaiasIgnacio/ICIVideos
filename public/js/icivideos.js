@@ -124,6 +124,8 @@ $().ready(function() {
         openOnFocus: true,
         closeAfterSelect: true,
         persist: false,
+        dropdownParent: "body",
+        closeAfterSelect: true,
         onItemAdd(value, item) {
             var artistas = $("#filtro_artistas").val();
             artistas.push(item[0].innerHTML);
