@@ -2,6 +2,10 @@ html, body {
     background-color: #252830;
     min-height: 100%;
 }
+.div_index {
+    min-width: 72%;
+    /* margin-left: 0; */
+}
 .caixa_filtros {
     background-color: #000;
     margin-bottom: 3px !important;
@@ -50,7 +54,7 @@ html, body {
     justify-content: space-between;
 }
 .modal-card {
-    height: 70%;
+    height: 68%;
     width: 53%;
     margin-top: -150px;
 }
@@ -80,4 +84,17 @@ html, body {
 .caixa_filtros h2 {
     text-align: center;
     border-bottom: 1px solid #fff;
+}
+.selectize-dropdown-content {
+    overflow-y: hidden;
+    max-height: 100% !important;
+    font-weight: bold;
+    cursor: pointer;
+}
+.selectize-dropdown .active, .selectize-dropdown [data-selectable] .highlight {
+    background-color: #061994 !important;
+    color: #fff;
+}
+.selectize-dropdown-content .option:nth-child(even) {
+    background-color: #ddd;
 }

@@ -29,13 +29,19 @@
                     <input type="checkbox" name="live" id="live" value="{{App\Models\Tipo::where('nome', 'Live')->first()->id}}"> Live
                     <input type="checkbox" name="mv" id="mv" value="{{App\Models\Tipo::where('nome', 'MV')->first()->id}}"> Mv
                     <input type="checkbox" name="misc" id="misc" value="{{App\Models\Tipo::where('nome', 'Misc')->first()->id}}"> Misc
+                    <br>
                     <input type="checkbox" name="favoritos" id="favoritos"> Favoritos
+                    <input type="checkbox" name="vertical" id="vertical"> Vertical
                 </label>
             </div>
             <div class='column is-3'>
                 <label class="label">Resolução vertical mínima</label>
                 <div class="control">
                     <input type='text' class='input input_form' id='resolucao' name='resolucao' placeholder='Resolução'>
+                </div>
+                <label class="label">FPS mínimo</label>
+                <div class="control">
+                    <input type='text' class='input input_form' id='fps' name='fps' placeholder='FPS'>
                 </div>
                 <label class="label">Data</label>
                 <label class="radio">

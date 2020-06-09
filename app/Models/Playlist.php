@@ -34,7 +34,7 @@ class Playlist extends Model {
         
         if (!empty($filtros['musicas'])) {
             $busca->join('video_musica', 'video_musica.id_video', 'video.id')
-                        ->whereIn('video_musica.id_musica', $filtros['artistas']);
+                        ->whereIn('video_musica.id_musica', $filtros['musicas']);
         }
 
         if (isset($filtros['tipos']) && count($filtros['tipos']) > 0) {
