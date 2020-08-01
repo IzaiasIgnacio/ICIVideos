@@ -48,11 +48,15 @@ class Video extends Model {
 							->leftJoin('tag', 'video_tag.id_tag', 'tag.id');
 
 		if (!$filtros) {
-			return $videos->groupBy('video.id')->take(100)->get();
+			return $videos->groupBy('video.id')->orderByDesc('video.id')->take(100)->get();
 		}
 
 		if (!empty($filtros['artistas'])) {
             $videos->whereIn('artista.nome', $filtros['artistas']);
+		}
+
+		if (!empty($filtros['tags'])) {
+            $videos->whereIn('tag.nome', $filtros['tags']);
 		}
 		
 		return $videos->groupBy('video.id')->orderByDesc('video.id')->get();
@@ -177,7 +181,7 @@ class Video extends Model {
 
 	private function buscarMusicasTitulo($titulo_tratado) {
 		$musicas = [];
-		foreach(Musica::whereRaw('length(titulo) > 2')->get()->pluck('titulo') as $musica) {
+		foreach (Musica::whereRaw('length(titulo) > 2')->get()->pluck('titulo') as $musica) {
 			if (strstr(mb_strtolower($titulo_tratado), mb_strtolower($musica))) {
 				$musicas[$musica] = $musica;
 			}
@@ -187,7 +191,7 @@ class Video extends Model {
 
 	private function buscarTagsTitulo($titulo_tratado) {
 		$tags = [];
-		foreach(Tag::whereRaw('length(nome) > 2')->get()->pluck('nome') as $tag) {
+		foreach (Tag::whereRaw('length(nome) > 2')->where('nome', '<>', 'Concert')->get()->pluck('nome') as $tag) {
 			if (strstr(mb_strtolower($titulo_tratado), mb_strtolower($tag))) {
 				$tags[$tag] = $tag;
 			}

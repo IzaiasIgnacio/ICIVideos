@@ -15,7 +15,7 @@ class Playlist extends Model {
 
     public $artistas;
 
-    public static function gerarPlaylist($filtros) {
+    public static function gerarPlaylist($filtros, $salvar_banco=true) {
         $busca = Video::query();
 
         if (!empty($filtros['categorias'])) {
@@ -41,7 +41,7 @@ class Playlist extends Model {
             $busca->whereIn('video.id_tipo', $filtros['tipos']);
         }
         
-        if ($filtros['favoritos'] != 'false') {
+        if (isset($filtros['favoritos']) && $filtros['favoritos'] != 'false') {
             $busca->where('video.favorito', 1);
         }
 
@@ -59,15 +59,25 @@ class Playlist extends Model {
         shuffle($caminhos);
         Storage::disk('videos')->put($filtros['nome'].'.m3u', implode("\r\n", $caminhos));
 
-        $playlist = Playlist::firstOrCreate([
-            'nome' => $filtros['nome']
-        ]);
+        if ($salvar_banco) {
+            $playlist = Playlist::firstOrCreate([
+                'nome' => $filtros['nome']
+            ]);
 
-        unset($filtros['nome']);
-        $playlist->filtros = \json_encode($filtros->all());
-        $playlist->save();
+            unset($filtros['nome']);
+            $playlist->filtros = \json_encode($filtros->all());
+            $playlist->save();
+        }
 
         return 'ok';
+    }
+
+    public function refazerPlaylist($playlist) {
+        $filtros = array_merge(
+            ['nome' => $playlist->nome],
+            json_decode($playlist->filtros, true)
+        );
+        return $this->gerarPlaylist($filtros, false);
     }
 
     public function buscarPlaylists() {

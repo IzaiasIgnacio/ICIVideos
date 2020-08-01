@@ -1,4 +1,6 @@
 var select_artistas_modal;
+var artistas;
+var tags;
 $().ready(function() {
 
     $('.btn_modal_add_jogo').click(function() {
@@ -83,7 +85,7 @@ $().ready(function() {
         favoritos: $("#favoritos").is(":checked"),
         resolucao: $("#resolucao").val()},
         function(resposta) {
-            console.log(resposta);
+            // console.log(resposta);
         });
     });
 
@@ -95,6 +97,7 @@ $().ready(function() {
         maxItems: null,
         hideSelected: true,
         persist: false,
+        delimiter: null,
         closeAfterSelect: true
     };
 
@@ -107,6 +110,7 @@ $().ready(function() {
         hideSelected: true,
         closeAfterSelect: true,
         persist: false,
+        delimiter: null,
         render: {
             option_create: function() {
                 return "<div class='create'></div>";
@@ -124,16 +128,27 @@ $().ready(function() {
         openOnFocus: true,
         closeAfterSelect: true,
         persist: false,
+        delimiter: null,
         dropdownParent: "body",
         closeAfterSelect: true,
         onItemAdd(value, item) {
-            var artistas = $("#filtro_artistas").val();
-            artistas.push(item[0].innerHTML);
+            var elemento = $(item[0]).parent()[0].children[1].id;
+            if (elemento.search("artistas") != -1) {
+                artistas = $("#filtro_artistas").val();
+                artistas.push(value);
+            }
+            if (elemento.search("tags") != -1) {
+                tags = $("#filtro_tags").val();
+                tags.push(value);
+            }
             $.post('/ICIVideos/public/ajax/filtrar_videos', {
-                artistas: artistas
+                artistas: artistas,
+                tags: tags
             },
             function(resposta) {
+                // console.log(resposta);
                 $(".tabela_videos").html(resposta.html);
+                $(".total_videos").html(resposta.total_videos);
             });
         }
     };
@@ -147,6 +162,7 @@ $().ready(function() {
     $('#musicas_remover').selectize(options);
 
     $('#filtro_artistas').selectize(option_filtros);
+    $('#filtro_tags').selectize(option_filtros);
 
     select_musicas_modal = $('#musicas_modal').selectize(options_modal);
     select_tags_modal = $('#tags_modal').selectize(options_modal);
@@ -197,7 +213,7 @@ $().ready(function() {
             tags: $("#tags_modal").val()
         },
         function(resposta) {
-            console.log(resposta);
+            // console.log(resposta);
             if (resposta == 'ok') {
                 $("#modal_video").removeClass('is-active');
                 $(".titulo_"+$("#id_video").val()).html($("#titulo_tratado").val());
@@ -223,6 +239,27 @@ $().ready(function() {
         function() {
             star.toggleClass('fa far');
         });
+    });
+
+    $(".fa-redo").click(function() {
+        $.post('/ICIVideos/public/ajax/refazer_playlist', {id: $(this).parent().attr('id')},
+        function(resposta) {
+            // console.log(resposta)
+        });
+    });
+
+    $(".btn_excluir").click(function() {
+        if (confirm('Excluir Vídeo?')) {
+            $.get('/ICIVideos/public/ajax/excluir_video/'+$("#id_video").val(),
+            function(resposta) {
+                if (resposta == 'ok') {
+                    $("#modal_video").removeClass('is-active');                 
+                }
+                else {
+                    console.log(resposta);
+                }
+            });
+        }
     });
 
 });

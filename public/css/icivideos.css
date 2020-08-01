@@ -10,6 +10,8 @@ html, body {
     background-color: #000;
     margin-bottom: 3px !important;
     margin-top: 3px !important;
+    margin-left: 0;
+    margin-right: 0;
     border-radius: 3px;
     color: #fff !important;
     padding: 0px 10px 10px 10px;
@@ -54,7 +56,7 @@ html, body {
     justify-content: space-between;
 }
 .modal-card {
-    height: 68%;
+    height: 70%;
     width: 53%;
     margin-top: -150px;
 }
@@ -97,4 +99,10 @@ html, body {
 }
 .selectize-dropdown-content .option:nth-child(even) {
     background-color: #ddd;
+}
+div .icones {
+    margin-right: -2px;
+}
+.total_videos {
+    float: right;
 }

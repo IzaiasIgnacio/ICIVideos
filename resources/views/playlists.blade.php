@@ -108,7 +108,7 @@
             <td>{{$playlist->favoritos}}</td>
             <td>{{$playlist->musicas}}</td>
             <td>{{$playlist->resolucao}}</td>
-            <td></td>
+            <td class='icones' id='{{$playlist->id}}'><i class='fa fa-redo'></i></td>
         </tr>
         @endforeach
     </tbody>

@@ -5,17 +5,27 @@ namespace App\Http\Controllers;
 use Config;
 use App\Models\Playlist;
 use App\Models\Video;
+use App\Models\VideoArtista;
+use App\Models\VideoMusica;
+use App\Models\VideoTag;
+use App\Models\VideoAudio;
 use App\Models\Categoria;
 use App\Models\Artista;
 use App\Models\Tag;
 use App\Models\Musica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class AjaxController extends Controller {
 
     public function gerarPlaylist(Request $request) {
         return Playlist::gerarPlaylist($request);
+    }
+    
+    public function refazerPlaylist(Request $request) {
+        $playlist = Playlist::find($request['id']);
+        return $playlist->refazerPlaylist($playlist);
     }
 
     public function buscarDadosVideoModal(Request $request) {
@@ -39,12 +49,43 @@ class AjaxController extends Controller {
     }
 
     public function filtrarVideos(Request $request) {
-        // return Video::buscarVideosIndex($request->all());
+        // return $request->all();
+        $videos = Video::buscarVideosIndex($request->all());
         $html = view('tabela_videos', [
-            'videos' => Video::buscarVideosIndex($request->all())
+            'videos' => $videos
         ])->render();
 
-        return ['html' => $html];
+        return ['html' => $html, 'total_videos' => $videos->count()];
     }
+
+    public function excluirVideo(Request $request, $args) {
+        try {
+            DB::connection('icivideos')->beginTransaction();
+            VideoArtista::where('id_video', $args)->delete();
+            VideoMusica::where('id_video', $args)->delete();
+            VideoTag::where('id_video', $args)->delete();
+            VideoAudio::where('id_video', $args)->delete();
+
+            for ($i=1;$i<=8;$i++) {
+                Storage::disk('public')->delete('capturas/'.$args.'_'.$i.'.png');
+            }
+
+            $video = Video::find($args);
+            Storage::disk('videos')->delete($video->buscarCaminhoCompleto());
+            $video->delete();
+
+            DB::connection('icivideos')->commit();
+            return 'ok';
+        }
+        catch (\Exception $ex) {
+            DB::connection('icivideos')->rollback();
+            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+        }
+        catch (\Error $ex) {
+            DB::connection('icivideos')->rollback();
+            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+        }
+    }
+    
     
 }

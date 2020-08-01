@@ -18,16 +18,23 @@ Route::get('/playlists', 'IndexController@exibirPlaylists')->name('exibir_playli
 
 Route::prefix('/ajax')->group(function () {
     Route::post('/gerar_playlist', 'AjaxController@gerarPlaylist')->name('gerar_playlist');
+    Route::post('/refazer_playlist', 'AjaxController@refazerPlaylist')->name('refazer_playlist');
     Route::post('/dados_video_modal', 'AjaxController@buscarDadosVideoModal')->name('dados_video_modal');
     Route::post('/salvar_video', 'AjaxController@salvarVideo')->name('salvar_video');
     Route::post('/play', 'AjaxController@play')->name('play');
     Route::post('/favorito', 'AjaxController@favorito')->name('favorito');
     Route::post('/filtrar_videos', 'AjaxController@filtrarVideos')->name('filtrar_videos');
+    Route::get('/excluir_video/{video}', 'AjaxController@excluirVideo')->name('excluir_video');
 });
 
 Route::prefix('/storage')->group(function () {
     Route::get('/atualizar_videos/{novos?}', 'StorageController@atualizarVideosStorage')->name('atualizar_videos_storage');
     Route::get('/atualizar_video/{id}', 'StorageController@atualizarVideoStorage')->name('atualizar_video_storage');
+});
+
+Route::get('youtube', function () {
+    $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD');
+    print_r($playlistItems);
 });
 
 Route::get('teste2', function () {

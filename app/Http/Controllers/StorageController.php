@@ -15,6 +15,7 @@ class StorageController extends Controller {
 
     private $probe;
     private $novos;
+    private $contador_novos;
 
     public function __construct() {
         ini_set('max_execution_time', 0);
@@ -43,6 +44,7 @@ class StorageController extends Controller {
         $categorias = Models\Categoria::get();
 
         try {
+            $this->contador_novos = 0;
             DB::connection('icivideos')->beginTransaction();
 
             foreach ($categorias as $categoria) {
@@ -55,12 +57,11 @@ class StorageController extends Controller {
                     $this->salvarVideosArtistaTipo($pasta, $categoria->id, $artista->id, 'Misc');
                     $this->salvarVideosArtistaTipo($pasta, $categoria->id, $artista->id, 'Live');
                     $this->salvarVideosArtistaTipo($pasta, $categoria->id, $artista->id, 'Mv');
-
-                    DB::connection('icivideos')->commit();
                 }
             }
 
             DB::connection('icivideos')->commit();
+            return $this->contador_novos;
         }
         catch (\Exception $ex) {
             DB::connection('icivideos')->rollback();
@@ -124,6 +125,7 @@ class StorageController extends Controller {
         }
 
         $this->gerarCapturas($video, $video->duracao);
+        $this->contador_novos++;
     }
 
     public function gerarCapturas($video, $duracao = null) {
