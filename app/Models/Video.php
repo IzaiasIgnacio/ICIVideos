@@ -58,6 +58,10 @@ class Video extends Model {
 		if (!empty($filtros['tags'])) {
             $videos->whereIn('tag.nome', $filtros['tags']);
 		}
+
+		if (!empty($filtros['titulo'])) {
+            $videos->whereIn('video.titulo', $filtros['titulo']);
+		}
 		
 		return $videos->groupBy('video.id')->orderByDesc('video.id')->get();
 	}
@@ -208,7 +212,8 @@ class Video extends Model {
 			'웬디' => 'Wendy',
 			'예리' => 'Yeri',
 			'직캠' => 'Fancam',
-			'태연' => 'Taeyeon'
+			'태연' => 'Taeyeon',
+			'나연' => 'Naeyon'
 		];
 
 		foreach ($traducoes as $original => $traduzido) {
@@ -232,6 +237,13 @@ class Video extends Model {
 		}
 
 		return $titulo;
+	}
+
+	public function buscaTag($tag) {
+		$id_tag = Tag::where('nome', $tag)->first()->id;
+        if (VideoTag::where('id_video', $this->id)->where('id_tag', $id_tag)->exists()) {
+			return ' '.$tag;
+		}
 	}
 
 	// 	Regex rgx = new Regex(@"[^a-zA-Z0-9 (\(|\)) (\[|\]) .+_&@ \-']");

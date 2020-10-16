@@ -44,7 +44,7 @@
                             <i class="{{($video->favorito == 1) ? 'fa' : 'far'}} fa-star"></i>
                         </div>
                         <div class="column is-3">
-                            <i class='fas fa-list'></i>
+                            <i class='fab fa-hotjar{{$video->buscaTag("hot")}}'></i>
                         </div>
                     </div>
                 </td>

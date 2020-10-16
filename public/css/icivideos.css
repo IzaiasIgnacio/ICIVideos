@@ -106,3 +106,6 @@ div .icones {
 .total_videos {
     float: right;
 }
+.hot {
+    color: red !important;
+}

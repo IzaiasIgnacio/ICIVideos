@@ -23,6 +23,7 @@ Route::prefix('/ajax')->group(function () {
     Route::post('/salvar_video', 'AjaxController@salvarVideo')->name('salvar_video');
     Route::post('/play', 'AjaxController@play')->name('play');
     Route::post('/favorito', 'AjaxController@favorito')->name('favorito');
+    Route::post('/hot', 'AjaxController@hot')->name('hot');
     Route::post('/filtrar_videos', 'AjaxController@filtrarVideos')->name('filtrar_videos');
     Route::get('/excluir_video/{video}', 'AjaxController@excluirVideo')->name('excluir_video');
 });
@@ -33,8 +34,27 @@ Route::prefix('/storage')->group(function () {
 });
 
 Route::get('youtube', function () {
-    $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD');
-    print_r($playlistItems);
+    // $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD');
+    // foreach ($playlistItems['results'] as $v) {
+    //     echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
+    // }
+    // if (!empty($playlistItems['info']['nextPageToken'])) {
+    //     $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD', $playlistItems['info']['nextPageToken']);
+    //     foreach ($playlistItems['results'] as $v) {
+    //         echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
+    //     }
+    // }
+    
+    function get($pagina='') {
+        $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD', $pagina);
+        foreach ($playlistItems['results'] as $v) {
+            echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
+        }
+        if (!empty($playlistItems['info']['nextPageToken'])) {
+            get($playlistItems['info']['nextPageToken']);
+        }
+    }
+    get();
 });
 
 Route::get('teste2', function () {
@@ -45,6 +65,11 @@ Route::get('teste2', function () {
 });
 
 Route::get('teste', function () {
+    $arquivos = Storage::disk('videos')->allfiles('kpop/Taeyeon/Lives');
+    print_r($arquivos);
+    die;
+
+
     $videos = App\Models\Video::where('id', '>', 1067)->get();
     foreach ($videos as $video) { 
         $c = new \App\Http\Controllers\StorageController();

@@ -48,6 +48,20 @@ class AjaxController extends Controller {
         $video->save();
     }
 
+    public function hot(Request $request) {
+        $id_hot = Tag::where('nome', 'Hot')->first()->id;
+        $video_tag = VideoTag::where('id_video', $request['id'])->where('id_tag', $id_hot);
+        if ($video_tag->exists()) {
+            $video_tag->delete();
+        }
+        else {
+            $vt = new VideoTag();
+            $vt->id_tag = $id_hot;
+            $vt->id_video = $request['id'];
+            $vt->save();
+        }
+    }
+
     public function filtrarVideos(Request $request) {
         // return $request->all();
         $videos = Video::buscarVideosIndex($request->all());

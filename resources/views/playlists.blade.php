@@ -104,7 +104,7 @@
             <td>{{$playlist->categorias}}</td>
             <td>{{$playlist->artistas}}</td>
             <td>{{$playlist->tipos}}</td>
-            <td></td>
+            <td>{{$playlist->tags}}</td>
             <td>{{$playlist->favoritos}}</td>
             <td>{{$playlist->musicas}}</td>
             <td>{{$playlist->resolucao}}</td>

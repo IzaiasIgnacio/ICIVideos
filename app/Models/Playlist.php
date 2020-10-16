@@ -81,7 +81,7 @@ class Playlist extends Model {
     }
 
     public function buscarPlaylists() {
-        $playlists = Playlist::get();
+        $playlists = Playlist::orderBy('nome')->get();
         
         foreach ($playlists as $playlist) {
             $filtros = json_decode($playlist['filtros'], true);

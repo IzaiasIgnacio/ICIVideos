@@ -15,6 +15,7 @@ class IndexController extends Controller {
     public function exibirVideos() {
         return view('index', [
             'videos' => Video::buscarVideosIndex(),
+            'titulos' => Video::get()->pluck('titulo', 'titulo'),
             'musicas' => Musica::get()->pluck('titulo', 'titulo'),
             'tags' => Tag::get()->pluck('nome', 'nome'),
             'artistas' => Artista::orderBy('nome')->get()->pluck('nome', 'nome'),

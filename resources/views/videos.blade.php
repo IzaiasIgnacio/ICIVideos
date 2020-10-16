@@ -12,6 +12,12 @@
             {{Form::select('filtro_tags', $tags, null, ['placeholder' => 'Tags', 'id' => 'filtro_tags'])}}
         </div>
     </div>
+    <div class='column is-3'>
+        <div class="field">
+            <label class="label">Título</label>
+            {{Form::select('filtro_titulo', $titulos, null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}}
+        </div>
+    </div>
     <div class='column is-3 is-offset-3'>
         <label class='total_videos'></label>
     </div>
