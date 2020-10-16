@@ -75,7 +75,13 @@ class StorageController extends Controller {
 
     private function salvarVideosArtistaTipo($pasta, $id_categoria, $id_artista, $nome_tipo) {
         $tipo = Models\Tipo::where('nome', $nome_tipo)->first();
-        $arquivos = Storage::disk('videos')->files($pasta.'/'.$tipo->pasta);
+        if (empty($tipo->pasta)) {
+            $arquivos = Storage::disk('videos')->files($pasta.'/'.$tipo->pasta);
+        }
+        else {
+            $arquivos = Storage::disk('videos')->allfiles($pasta.'/'.$tipo->pasta);
+        }
+
         foreach ($arquivos as $arquivo) {
             $this->salvarVideo($arquivo, $id_categoria, $id_artista, $tipo->id);
         }
@@ -91,7 +97,12 @@ class StorageController extends Controller {
         }
         
         $caminho = Storage::disk('videos')->url($arquivo);
-        $video_info = $this->probe->streams($caminho)->videos()->first();
+        try {
+            $video_info = $this->probe->streams($caminho)->videos()->first();
+        }
+        catch (\Exception $ex) {
+            return;
+        }
         if ($video_info == null) {
             return;
         }
@@ -106,7 +117,7 @@ class StorageController extends Controller {
         $video->duracao = $this->probe->format($caminho)->get('duration');
         $video->resolucao = $video_info->get('width').'X'.$video_info->get('height');
         $video->formato_video = $video_info->get('codec_long_name');
-        $video->fps = \number_format(eval('return @'.$video_info->get('avg_frame_rate').';'), 2);
+        $video->fps = @\number_format(eval('return @'.$video_info->get('avg_frame_rate').';'), 2);
         $video->tamanho = (string) BigFileTools::createDefault()->getFile($caminho)->getSize() / 1024;
         $video->data_arquivo = date('Y-m-d', filemtime($caminho));
         $video->save();

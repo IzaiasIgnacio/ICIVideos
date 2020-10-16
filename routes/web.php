@@ -66,7 +66,8 @@ Route::get('teste2', function () {
 
 Route::get('teste', function () {
     $arquivos = Storage::disk('videos')->allfiles('kpop/Taeyeon/Lives');
-    print_r($arquivos);
+    $info = pathinfo($arquivos[0]);
+    echo $info['extension'];
     die;
 
 
