@@ -103,11 +103,13 @@ class StorageController extends Controller {
         catch (\Exception $ex) {
             return;
         }
-        if ($video_info == null) {
-            return;
-        }
+        
         $audio_info = $this->probe->streams($caminho)->audios();
 
+        if ($video_info == null || count($audio_info) == 0) {
+            return;
+        }
+        
         if (empty($video)) { 
             $video = Models\Video::buscarOucriarVideo($info['filename'], $id_artista, $id_categoria, $id_tipo);
         }

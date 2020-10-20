@@ -85,13 +85,13 @@ class Video extends Model {
 		$video->audios = VideoAudio::where('id_video', $id)->get();
 		$video->capturas = [
 			1 => $this->buscarCaptura(1),
-			2 => $this->buscarCaptura(2), 
-			3 => $this->buscarCaptura(3), 
+			2 => $this->buscarCaptura(2),
+			3 => $this->buscarCaptura(3),
 			4 => $this->buscarCaptura(4), 
-			5 => $this->buscarCaptura(5), 
-			6 => $this->buscarCaptura(6), 
-			7 => $this->buscarCaptura(7), 
-			8 => $this->buscarCaptura(8) 
+			5 => $this->buscarCaptura(5),
+			6 => $this->buscarCaptura(6),
+			7 => $this->buscarCaptura(7),
+			8 => $this->buscarCaptura(8)
 		];
 		$video->artistas = VideoArtista::join('artista', 'artista.id', 'video_artista.id_artista')->where('id_video', $video->id)->pluck('nome', 'nome')->toArray();
 		$video->musicas = VideoMusica::join('musica', 'musica.id', 'video_musica.id_musica')->where('id_video', $video->id)->pluck('titulo', 'titulo')->toArray();
