@@ -59,6 +59,10 @@ class Video extends Model {
             $videos->whereIn('tag.nome', $filtros['tags']);
 		}
 
+		if (!empty($filtros['musicas'])) {
+            $videos->whereIn('musica.titulo', $filtros['musicas']);
+		}
+
 		if (!empty($filtros['titulo'])) {
             $videos->whereIn('video.titulo', $filtros['titulo']);
 		}

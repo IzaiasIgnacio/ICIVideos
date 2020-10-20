@@ -14,6 +14,12 @@
     </div>
     <div class='column is-3'>
         <div class="field">
+            <label class="label">Músicas</label>
+            {{Form::select('filtro_musicas', $musicas, null, ['placeholder' => 'Músicas', 'id' => 'filtro_musicas'])}}
+        </div>
+    </div>
+    <div class='column is-3'>
+        <div class="field">
             <label class="label">Título</label>
             {{Form::select('filtro_titulo', $titulos, null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}}
         </div>

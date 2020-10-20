@@ -1,6 +1,7 @@
 var select_artistas_modal;
 var artistas;
 var tags;
+var musicas;
 var titulo;
 $().ready(function() {
 
@@ -142,6 +143,10 @@ $().ready(function() {
                 tags = $("#filtro_tags").val();
                 tags.push(value);
             }
+            if (elemento.search("musicas") != -1) {
+                musicas = $("#filtro_musicas").val();
+                musicas.push(value);
+            }
             if (elemento.search("titulo") != -1) {
                 titulo = $("#filtro_titulo").val();
                 titulo.push(value);
@@ -149,6 +154,7 @@ $().ready(function() {
             $.post('/ICIVideos/public/ajax/filtrar_videos', {
                 artistas: artistas,
                 tags: tags,
+                musicas: musicas,
                 titulo: titulo
             },
             function(resposta) {
@@ -169,6 +175,7 @@ $().ready(function() {
 
     $('#filtro_artistas').selectize(option_filtros);
     $('#filtro_tags').selectize(option_filtros);
+    $('#filtro_musicas').selectize(option_filtros);
     $('#filtro_titulo').selectize(option_filtros);
 
     select_musicas_modal = $('#musicas_modal').selectize(options_modal);
