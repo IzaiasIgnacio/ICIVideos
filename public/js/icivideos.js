@@ -160,7 +160,7 @@ $().ready(function() {
             function(resposta) {
                 // console.log(resposta);
                 $(".tabela_videos").html(resposta.html);
-                $(".total_videos").html(resposta.total_videos);
+                $(".total_videos").html('<i class="fas fa-music"></i> '+resposta.sem_musica+' | Total: '+resposta.total_videos);
             });
         }
     };

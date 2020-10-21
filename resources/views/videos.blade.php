@@ -1,5 +1,5 @@
 @include('modal_video')
-<div class="columns caixa_filtros">
+<div class="columns is-multiline caixa_filtros">
     <div class='column is-3'>
         <div class="field">
             <label class="label">Artistas</label>
@@ -24,7 +24,7 @@
             {{Form::select('filtro_titulo', $titulos, null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}}
         </div>
     </div>
-    <div class='column is-3 is-offset-3'>
+    <div class='column is-offset-9 is-3'>
         <label class='total_videos'></label>
     </div>
 </div>

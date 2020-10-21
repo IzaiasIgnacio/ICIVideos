@@ -68,8 +68,9 @@ class AjaxController extends Controller {
         $html = view('tabela_videos', [
             'videos' => $videos
         ])->render();
+        $sem_musica = Video::videosSemMusica($videos->pluck('id'));
 
-        return ['html' => $html, 'total_videos' => $videos->count()];
+        return ['html' => $html, 'sem_musica' => $sem_musica, 'total_videos' => $videos->count()];
     }
 
     public function excluirVideo(Request $request, $args) {

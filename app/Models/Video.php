@@ -56,7 +56,12 @@ class Video extends Model {
 		}
 
 		if (!empty($filtros['tags'])) {
-            $videos->whereIn('tag.nome', $filtros['tags']);
+			if ($filtros['tags'][0] == 'sem_tag') {
+				$videos->whereNull('video_tag.id');
+			}
+			else {
+				$videos->whereIn('tag.nome', $filtros['tags']);
+			}
 		}
 
 		if (!empty($filtros['musicas'])) {
@@ -248,6 +253,22 @@ class Video extends Model {
         if (VideoTag::where('id_video', $this->id)->where('id_tag', $id_tag)->exists()) {
 			return ' '.$tag;
 		}
+	}
+
+	public function listarTags() {
+		return implode(', ',Tag::select('tag.nome')
+									->join('video_tag', 'video_tag.id_tag', 'tag.id')
+										->where('video_tag.id_video', $this->id)
+											->pluck('nome')
+												->toArray());
+	}
+
+	public static function videosSemMusica($videos) {
+		return Video::leftJoin('video_musica', 'video.id', 'video_musica.id_video')
+						->whereNull('video_musica.id')
+						->whereIn('video.id_tipo', [1, 2])
+						->whereIn('video.id', $videos)
+							->count();
 	}
 
 	// 	Regex rgx = new Regex(@"[^a-zA-Z0-9 (\(|\)) (\[|\]) .+_&@ \-']");

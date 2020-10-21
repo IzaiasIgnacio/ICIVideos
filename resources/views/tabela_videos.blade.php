@@ -29,7 +29,7 @@
                     {{\gmdate('H:i:s', $video->duracao)}}
                 </td>
                 <td><label class='td_musicas'>{{$video->musicas}}</label></td>
-                <td><label class='td_tags'>{{$video->tags}}</label></td>
+                <td><label class='td_tags'>{{$video->listarTags()}}</label></td>
                 <td>{{date('d/m/Y', strtotime($video->data_arquivo))}}</td>
                 <td>
                     <input type='hidden' class='id_video' value='{{$video->id}}' />

@@ -17,7 +17,7 @@ class IndexController extends Controller {
             'videos' => Video::buscarVideosIndex(),
             'titulos' => Video::get()->pluck('titulo', 'titulo'),
             'musicas' => Musica::get()->pluck('titulo', 'titulo'),
-            'tags' => Tag::get()->pluck('nome', 'nome'),
+            'tags' => (object) array_merge(['sem_tag' => 'Sem Tag'], Tag::get()->pluck('nome', 'nome')->toArray()),
             'artistas' => Artista::orderBy('nome')->get()->pluck('nome', 'nome'),
             'pagina' => 'videos',
             'db' => Config::get('app.db')
