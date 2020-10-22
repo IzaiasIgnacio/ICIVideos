@@ -115,7 +115,7 @@ class AjaxController extends Controller {
                 Storage::disk('videos')->move($video->caminho."/output.mp4", $video->caminho."/".$video->titulo.".mp4");
                 
                 $storage = new StorageController();
-                $storage->salvarVideo($video->buscarCaminhoCompleto(), null, null, null, $video, false);
+                $storage->salvarVideo($video->buscarCaminhoCompleto(), null, null, null, $video);
                 return 'ok';
             }
 

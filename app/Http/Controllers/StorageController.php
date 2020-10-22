@@ -87,7 +87,7 @@ class StorageController extends Controller {
         }
     }
 
-    public function salvarVideo($arquivo, $id_categoria, $id_artista, $id_tipo, $video = null, $capturas = true) {
+    public function salvarVideo($arquivo, $id_categoria, $id_artista, $id_tipo, $video = null) {
         $info = pathinfo($arquivo);
 
         if ($this->novos) {
@@ -141,10 +141,7 @@ class StorageController extends Controller {
             }
         }
 
-        if ($capturas) {
-            $this->gerarCapturas($video, $video->duracao);
-        }
-
+        $this->gerarCapturas($video, $video->duracao);
         $this->contador_novos++;
     }
 
