@@ -103,7 +103,7 @@ html, body {
 div .icones {
     margin-right: -2px;
 }
-.total_videos {
+.total_videos, .total_geral {
     float: right;
 }
 .hot {

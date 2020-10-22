@@ -20,7 +20,9 @@ class IndexController extends Controller {
             'tags' => (object) array_merge(['sem_tag' => 'Sem Tag'], Tag::get()->pluck('nome', 'nome')->toArray()),
             'artistas' => Artista::orderBy('nome')->get()->pluck('nome', 'nome'),
             'pagina' => 'videos',
-            'db' => Config::get('app.db')
+            'db' => Config::get('app.db'),
+            'sem_musica' => Video::videosSemMusica(Video::whereIn('id_tipo', [1,2])->pluck('id')),
+            'total_videos' => Video::whereIn('id_tipo', [1,2])->count()
         ]);
     }
 

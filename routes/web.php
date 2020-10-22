@@ -65,17 +65,9 @@ Route::get('teste2', function () {
 });
 
 Route::get('teste', function () {
-    $arquivos = Storage::disk('videos')->allfiles('kpop/Taeyeon/Lives');
-    $info = pathinfo($arquivos[0]);
-    echo $info['extension'];
-    die;
-
-
-    $videos = App\Models\Video::where('id', '>', 1067)->get();
-    foreach ($videos as $video) { 
-        $c = new \App\Http\Controllers\StorageController();
-        $c->gerarCapturas($video);
-    }
+    $video = App\Models\Video::find(242);
+    $c = new \App\Http\Controllers\StorageController();
+    echo $c->gerarCapturas($video);
     die;
 
     $captura = \Intervention\Image\Facades\Image::make(Storage::disk('public')->url('capturas/'.$video->id.'_1.png'));

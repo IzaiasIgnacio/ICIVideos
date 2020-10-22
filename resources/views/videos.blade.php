@@ -25,6 +25,8 @@
         </div>
     </div>
     <div class='column is-offset-9 is-3'>
+        <label class='total_geral'><i class="fas fa-music"></i> {{$sem_musica}} | Total: {{$total_videos}}</label>
+        <br>
         <label class='total_videos'></label>
     </div>
 </div>
