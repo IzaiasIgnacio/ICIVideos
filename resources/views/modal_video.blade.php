@@ -108,6 +108,7 @@
                         <label class="label">Artistas</label>
                         {{Form::select('artistas_modal', $artistas, null, ['placeholder' => 'Artistas', 'id' => 'artistas_modal'])}}
                     </div>
+                    <button class="button is-link btn_girar"><i class="fas fa-undo fa-flip-horizontal"></i></button>
                 </div>
             </div>
         </section>

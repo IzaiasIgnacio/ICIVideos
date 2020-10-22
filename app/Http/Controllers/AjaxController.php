@@ -16,6 +16,7 @@ use App\Models\Musica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\StorageController;
 
 class AjaxController extends Controller {
 
@@ -102,5 +103,30 @@ class AjaxController extends Controller {
         }
     }
     
-    
+    public function girarVideo(Request $request, $args) {
+        try {
+            $video = Video::find($args);
+
+            $raiz = 'K:/Vídeos/music/';
+            exec(escapeshellcmd("powershell -noprofile -command ffmpeg -i '".$raiz.$video->buscarCaminhoCompleto()."' -c copy -metadata:s:v:0 rotate=-90 '".$raiz.$video->caminho."/output.mp4'"), $retorno, $resultado);
+
+            if ($resultado == 0) {
+                Storage::disk('videos')->delete($video->buscarCaminhoCompleto());
+                Storage::disk('videos')->move($video->caminho."/output.mp4", $video->caminho."/".$video->titulo.".mp4");
+                
+                $storage = new StorageController();
+                $storage->salvarVideo($video->buscarCaminhoCompleto(), null, null, null, $video, false);
+                return 'ok';
+            }
+
+            return 'falha';
+        }
+        catch (\Exception $ex) {
+            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+        }
+        catch (\Error $ex) {
+            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+        }
+    }
+
 }

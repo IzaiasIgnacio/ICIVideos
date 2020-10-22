@@ -87,7 +87,7 @@ class StorageController extends Controller {
         }
     }
 
-    private function salvarVideo($arquivo, $id_categoria, $id_artista, $id_tipo, $video = null) {
+    public function salvarVideo($arquivo, $id_categoria, $id_artista, $id_tipo, $video = null, $capturas = true) {
         $info = pathinfo($arquivo);
 
         if ($this->novos) {
@@ -110,8 +110,10 @@ class StorageController extends Controller {
             return;
         }
         
+        $salvar_artista_audio = false;
         if (empty($video)) { 
             $video = Models\Video::buscarOucriarVideo($info['filename'], $id_artista, $id_categoria, $id_tipo);
+            $salvar_artista_audio = true;
         }
 
         $video->caminho = $info['dirname'];
@@ -124,20 +126,25 @@ class StorageController extends Controller {
         $video->data_arquivo = date('Y-m-d', filemtime($caminho));
         $video->save();
 
-        Models\VideoArtista::firstOrCreate([
-            'id_video' => $video->id,
-            'id_artista' => $id_artista
-        ]);
-
-        foreach ($audio_info as $audio) {
-            Models\VideoAudio::firstOrCreate([
+        if ($salvar_artista_audio) {
+            Models\VideoArtista::firstOrCreate([
                 'id_video' => $video->id,
-                'canais' => $audio->get('channels'),
-                'formato' => $audio->get('codec_long_name')
+                'id_artista' => $id_artista
             ]);
+
+            foreach ($audio_info as $audio) {
+                Models\VideoAudio::firstOrCreate([
+                    'id_video' => $video->id,
+                    'canais' => $audio->get('channels'),
+                    'formato' => $audio->get('codec_long_name')
+                ]);
+            }
         }
 
-        $this->gerarCapturas($video, $video->duracao);
+        if ($capturas) {
+            $this->gerarCapturas($video, $video->duracao);
+        }
+
         $this->contador_novos++;
     }
 

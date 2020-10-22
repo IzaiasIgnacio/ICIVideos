@@ -222,7 +222,13 @@ class Video extends Model {
 			'예리' => 'Yeri',
 			'직캠' => 'Fancam',
 			'태연' => 'Taeyeon',
-			'나연' => 'Naeyon'
+			'나연' => 'Naeyon',
+			'우기' => 'Yuqi',
+			'수진' => 'Soojin',
+			'소연' => 'Soyeon',
+			'미연' => 'Miyeon',
+			'민니' => 'Minnie',
+			'슈화' => 'Shuhua'
 		];
 
 		foreach ($traducoes as $original => $traduzido) {

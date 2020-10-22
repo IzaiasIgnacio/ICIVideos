@@ -26,6 +26,7 @@ Route::prefix('/ajax')->group(function () {
     Route::post('/hot', 'AjaxController@hot')->name('hot');
     Route::post('/filtrar_videos', 'AjaxController@filtrarVideos')->name('filtrar_videos');
     Route::get('/excluir_video/{video}', 'AjaxController@excluirVideo')->name('excluir_video');
+    Route::get('/girar_video/{video}', 'AjaxController@girarVideo')->name('girar_video');
 });
 
 Route::prefix('/storage')->group(function () {

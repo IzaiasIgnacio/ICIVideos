@@ -66,6 +66,13 @@ $().ready(function() {
         });
     });
 
+    $(".btn_girar").click(function() {
+        $.get('/ICIVideos/public/ajax/girar_video/'+$("#id_video").val(),
+        function(resposta) {
+            console.log(resposta)
+        });
+    });
+
     $(".gerar_playlist").click(function() {
         var tipos = [];
         if ($("#mv").is(':checked')) {
