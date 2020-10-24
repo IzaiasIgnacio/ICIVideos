@@ -34,6 +34,8 @@ Route::prefix('/storage')->group(function () {
     Route::get('/atualizar_video/{id}', 'StorageController@atualizarVideoStorage')->name('atualizar_video_storage');
 });
 
+Route::any('exportar', 'ExportarController@exportar')->name('exportar');
+
 Route::get('youtube', function () {
     // $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD');
     // foreach ($playlistItems['results'] as $v) {
