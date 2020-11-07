@@ -169,7 +169,12 @@ $().ready(function() {
                 $(".tabela_videos").html(resposta.html);
                 $(".total_videos").html('<i class="fas fa-music"></i> '+resposta.sem_musica+' | Total: '+resposta.total_videos);
             });
-        }
+        },
+        // render: {
+        //     option: function(item, escape) {
+        //         return '<div>'+item.text+'</div>';
+        //     }
+        // }
     };
 
     $('#categorias').selectize(options);

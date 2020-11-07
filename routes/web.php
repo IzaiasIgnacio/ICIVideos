@@ -49,7 +49,7 @@ Route::get('youtube', function () {
     // }
     
     function get($pagina='') {
-        $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD', $pagina);
+        $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH33ZT9cU2AiEEUOaFqcyW_gt', $pagina);
         foreach ($playlistItems['results'] as $v) {
             echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
         }
@@ -68,9 +68,8 @@ Route::get('teste2', function () {
 });
 
 Route::get('teste', function () {
-    $video = App\Models\Video::find(242);
     $c = new \App\Http\Controllers\StorageController();
-    echo $c->gerarCapturas($video);
+    $c->excluirCapturas();
     die;
 
     $captura = \Intervention\Image\Facades\Image::make(Storage::disk('public')->url('capturas/'.$video->id.'_1.png'));

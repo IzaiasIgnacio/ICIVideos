@@ -61,6 +61,7 @@ class StorageController extends Controller {
             }
 
             DB::connection('icivideos')->commit();
+            $this->excluirCapturas();
             return $this->contador_novos;
         }
         catch (\Exception $ex) {
@@ -183,6 +184,7 @@ class StorageController extends Controller {
     }
 
     public function redimensionarCapturas($video) {
+        ini_set("memory_limit", "-1");
         Log::channel('videos')->debug($video->id.' redimensionar');
         try {
             for ($i=1;$i<=8;$i++) {
@@ -213,6 +215,18 @@ class StorageController extends Controller {
         catch (\Error $ex) {
             Log::channel('videos')->debug($video->id.' '.$ex->getMessage().' '.$ex->getFile().' '.$ex->getLine());
             return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+        }
+    }
+
+    private function excluirCapturas() {
+        $arquivos = Storage::disk('public')->files('capturas');
+        foreach ($arquivos as $arquivo) {
+            $arq = str_replace("capturas/","", $arquivo);
+            $id = explode("_", $arq)[0];
+            $video = Models\Video::find($id);
+            if ($video == null) {
+                Storage::disk('public')->delete($arquivo);
+            }
         }
     }
 
