@@ -2,17 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Config;
 use App\Models\Playlist;
 use App\Models\Video;
 use App\Models\VideoArtista;
 use App\Models\VideoMusica;
 use App\Models\VideoTag;
 use App\Models\VideoAudio;
-use App\Models\Categoria;
-use App\Models\Artista;
 use App\Models\Tag;
-use App\Models\Musica;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -64,7 +60,7 @@ class AjaxController extends Controller {
     }
 
     public function filtrarVideos(Request $request) {
-        // return $request->all();
+        // para testar return $request->all();
         $videos = Video::buscarVideosIndex($request->all());
         $html = view('tabela_videos', [
             'videos' => $videos
@@ -74,7 +70,7 @@ class AjaxController extends Controller {
         return ['html' => $html, 'sem_musica' => $sem_musica, 'total_videos' => $videos->count()];
     }
 
-    public function excluirVideo(Request $request, $args) {
+    public function excluirVideo($args) {
         try {
             DB::connection('icivideos')->beginTransaction();
             VideoArtista::where('id_video', $args)->delete();
@@ -103,7 +99,8 @@ class AjaxController extends Controller {
         }
     }
     
-    public function girarVideo(Request $request, $args) {
+    public function girarVideo($args) {
+        $retorno = null;
         try {
             $video = Video::find($args);
 
@@ -122,11 +119,13 @@ class AjaxController extends Controller {
             return 'falha';
         }
         catch (\Exception $ex) {
-            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+            $retorno = $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
         }
         catch (\Error $ex) {
-            return $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
+            $retorno = $ex->getMessage().' '.$ex->getFile().' '.$ex->getLine();
         }
+
+        return $retorno;
     }
 
 }

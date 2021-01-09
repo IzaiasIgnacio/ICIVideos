@@ -24,7 +24,7 @@ class StorageController extends Controller {
     }
 
     private function getProbe() {
-        if (empty($probe)) {
+        if (empty($this->probe)) {
             $this->probe = FFMpeg\FFProbe::create([
                 'ffmpeg.binaries'  => 'I:/tools/ffmpeg/bin/ffmpeg.exe',
                 'ffprobe.binaries' => 'I:/tools/ffmpeg/bin/ffprobe.exe'
@@ -91,10 +91,8 @@ class StorageController extends Controller {
     public function salvarVideo($arquivo, $id_categoria, $id_artista, $id_tipo, $video = null) {
         $info = pathinfo($arquivo);
 
-        if ($this->novos) {
-            if (Models\Video::videoExiste($info['filename'], $id_categoria, $id_artista, $id_tipo)) {
-                return;
-            }
+        if ($this->novos && Models\Video::videoExiste($info['filename'], $id_categoria, $id_artista, $id_tipo)) {
+            return;
         }
         
         $caminho = Storage::disk('videos')->url($arquivo);
@@ -195,7 +193,7 @@ class StorageController extends Controller {
 
                 if ($altura_original <= $altura_nova) {
                     Log::channel('videos')->debug($video->id.' altura 360');
-                    return;
+                    return 'altura não alterada';
                 }
 
                 $largura_original = $captura->width();

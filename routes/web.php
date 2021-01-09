@@ -36,7 +36,7 @@ Route::prefix('/storage')->group(function () {
 
 Route::any('exportar', 'ExportarController@exportar')->name('exportar');
 
-Route::get('youtube', function () {
+Route::get('youtube/{id}', function ($id) {
     // $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH32P27m0MYTdwNof8fn3V2AD');
     // foreach ($playlistItems['results'] as $v) {
     //     echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
@@ -48,16 +48,16 @@ Route::get('youtube', function () {
     //     }
     // }
     
-    function get($pagina='') {
-        $playlistItems = Youtube::getPlaylistItemsByPlaylistId('PL9ObNeqRBH33ZT9cU2AiEEUOaFqcyW_gt', $pagina);
+    function get($id, $pagina='') {
+        $playlistItems = Youtube::getPlaylistItemsByPlaylistId($id, $pagina);
         foreach ($playlistItems['results'] as $v) {
             echo "https://www.youtube.com/watch?v=".$v->snippet->resourceId->videoId.PHP_EOL;
         }
         if (!empty($playlistItems['info']['nextPageToken'])) {
-            get($playlistItems['info']['nextPageToken']);
+            get($id, $playlistItems['info']['nextPageToken']);
         }
     }
-    get();
+    get($id);
 });
 
 Route::get('teste2', function () {
