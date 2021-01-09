@@ -50,42 +50,42 @@
                     <div class="columns is-gapless is-multiline">
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_1'>
+                                <img src="" class='captura_1' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_2'>
+                                <img src="" class='captura_2' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_3'>
+                                <img src="" class='captura_3' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_4'>
+                                <img src="" class='captura_4' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_5'>
+                                <img src="" class='captura_5' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_6'>
+                                <img src="" class='captura_6' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_7'>
+                                <img src="" class='captura_7' alt=''>
                             </figure>
                         </div>
                         <div class="column is-6">
                             <figure class="image is-16by9">
-                                <img src="" class='captura_8'>
+                                <img src="" class='captura_8' alt=''>
                             </figure>
                         </div>
                     </div>

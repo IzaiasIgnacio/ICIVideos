@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <title>ICIVídeos</title>
         @include('header')
     </head>
     <body>

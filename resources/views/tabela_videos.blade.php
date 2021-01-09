@@ -15,7 +15,7 @@
                 <td style="vertical-align:middle">
                     <figure class="image is-3x2">
                         @if (Storage::disk('public')->exists('capturas/'.$video->id.'_3.png'))
-                        <img src="{{Storage::disk('public')->url('capturas/'.$video->id.'_3.png')}}" />
+                        <img src="{{Storage::disk('public')->url('capturas/'.$video->id.'_3.png')}}" alt=''/>
                         @endif
                     </figure>
                 </td>
