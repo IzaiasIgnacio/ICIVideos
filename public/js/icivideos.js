@@ -73,6 +73,13 @@ $().ready(function() {
         });
     });
 
+    $(".btn_traduzir").click(function() {
+        $.get('/ICIVideos/public/ajax/traduzir/'+$("#titulo_tratado").val(),
+        function(resposta) {
+            $("#titulo_tratado").val(resposta)
+        });
+    });
+
     $(".gerar_playlist").click(function() {
         var tipos = [];
         if ($("#mv").is(':checked')) {

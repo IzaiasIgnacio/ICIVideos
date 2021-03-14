@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\StorageController;
+use Stichoza\GoogleTranslate\GoogleTranslate;
 
 class AjaxController extends Controller {
 
@@ -126,6 +127,11 @@ class AjaxController extends Controller {
         }
 
         return $retorno;
+    }
+
+    public function traduzir($args) {
+        $tr = new GoogleTranslate('en', 'ko');
+        return $tr->translate($args);
     }
 
 }

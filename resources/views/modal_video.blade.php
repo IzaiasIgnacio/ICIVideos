@@ -109,6 +109,7 @@
                         {{Form::select('artistas_modal', $artistas, null, ['placeholder' => 'Artistas', 'id' => 'artistas_modal'])}}
                     </div>
                     <button class="button is-link btn_girar"><i class="fas fa-undo fa-flip-horizontal"></i></button>
+                    <button class="button is-link btn_traduzir"><i class="fas fa-globe-asia"></i></button>
                 </div>
             </div>
         </section>
