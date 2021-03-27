@@ -134,4 +134,34 @@ class AjaxController extends Controller {
         return $tr->translate($args);
     }
 
+    public function filtrarRelatorio(Request $request) {
+        $db = \Config::get('app.db');
+        $connection = DB::connection($db);
+
+        $tags = Tag::buscarTagsArtista($request->artista);
+
+        $musicas = Video::select('musica.titulo', $connection->raw('count(distinct video.id) as total'))
+                    // $connection->raw('sum(video.id_tipo = 1) as lives'), $connection->raw('sum(video.id_tipo = 2) as mvs'))
+                        ->join('video_artista', 'video_artista.id_video', 'video.id')
+                        ->join('video_musica', 'video_musica.id_video', 'video.id')
+                        ->join('musica', 'musica.id', 'id_musica')
+                        ->leftJoin('video_tag', 'video_tag.id_video', 'video.id')
+                            ->where('id_artista', $request->artista)
+                                ->groupBy('id_musica')
+                                    ->orderByDesc('total');
+
+        if (!empty($tags)) {
+            foreach ($tags as $tag) {
+                $musicas->addSelect($connection->raw('sum(video_tag.id_tag = '.$tag->id.') as "'.$tag->nome.'"'));
+            }
+        }
+                                    
+        $html = view('tabela_relatorio', [
+            'musicas' => $musicas->get(),
+            'tags' => $tags
+        ])->render();
+
+        return ['html' => $html];
+    }
+
 }

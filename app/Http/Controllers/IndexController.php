@@ -31,11 +31,20 @@ class IndexController extends Controller {
 
         return view('index', [
             'categorias' => Categoria::get()->pluck('nome', 'id'),
-            'artistas' => Artista::get()->pluck('nome', 'id'),
+            'artistas' => Artista::orderBy('nome')->get()->pluck('nome', 'id'),
             'tags' => Tag::get()->pluck('nome', 'id'),
             'musicas' => Musica::get()->pluck('titulo', 'id'),
             'playlists' => $playlist->buscarPlaylists(),
             'pagina' => 'playlists',
+            'db' => Config::get('app.db')
+        ]);
+    }
+
+    public function exibirRelatorios() {
+        return view('index', [
+            'musicas' => null,
+            'artistas' => Artista::orderBy('nome')->get()->pluck('nome', 'id'),
+            'pagina' => 'relatorios',
             'db' => Config::get('app.db')
         ]);
     }

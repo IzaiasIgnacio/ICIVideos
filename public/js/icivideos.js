@@ -137,16 +137,14 @@ $().ready(function() {
     var option_filtros = {
         create: false,
         highlight: true,
-        openOnFocus: false,
+        openOnFocus: true,
         maxOptions: 20,
         maxItems: null,
         hideSelected: true,
-        openOnFocus: true,
         closeAfterSelect: true,
         persist: false,
         delimiter: null,
         dropdownParent: "body",
-        closeAfterSelect: true,
         onItemAdd(value, item) {
             var elemento = $(item[0]).parent()[0].children[1].id;
             if (elemento.search("artistas") != -1) {
@@ -184,6 +182,28 @@ $().ready(function() {
         // }
     };
 
+    var option_relatorios = {
+        create: false,
+        highlight: true,
+        openOnFocus: true,
+        maxOptions: 20,
+        maxItems: 1,
+        hideSelected: true,
+        closeAfterSelect: true,
+        persist: false,
+        delimiter: null,
+        dropdownParent: "body",
+        onItemAdd(value) {
+            $.post('/ICIVideos/public/ajax/filtrar_relatorio', {
+                artista: value
+            },
+            function(resposta) {
+                console.log(resposta);
+                $(".tabela_videos").html(resposta.html);
+            });
+        }
+    };
+
     $('#categorias').selectize(options);
     $('#artistas').selectize(options);
     $('#tags').selectize(options);
@@ -196,6 +216,8 @@ $().ready(function() {
     $('#filtro_tags').selectize(option_filtros);
     $('#filtro_musicas').selectize(option_filtros);
     $('#filtro_titulo').selectize(option_filtros);
+
+    $('#relatorio_artistas').selectize(option_relatorios);
 
     select_musicas_modal = $('#musicas_modal').selectize(options_modal);
     select_tags_modal = $('#tags_modal').selectize(options_modal);
