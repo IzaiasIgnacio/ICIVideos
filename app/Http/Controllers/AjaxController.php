@@ -155,7 +155,7 @@ class AjaxController extends Controller {
                 $musicas->addSelect($connection->raw('sum(video_tag.id_tag = '.$tag->id.') as "'.$tag->nome.'"'));
             }
         }
-                                    
+        
         $html = view('tabela_relatorio', [
             'musicas' => $musicas->get(),
             'tags' => $tags

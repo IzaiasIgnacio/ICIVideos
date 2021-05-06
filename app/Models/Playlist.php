@@ -28,8 +28,11 @@ class Playlist extends Model {
         }
         
         if (!empty($filtros['tags'])) {
-            $busca->join('video_tag', 'video_tag.id_video', 'video.id')
-                        ->whereIn('video_tag.id_tag', $filtros['tags']);
+            foreach ($filtros['tags'] as $tag) {
+                $busca->join('video_tag as '.$tag, $tag.'.id_video', 'video.id');
+                $busca->where($tag.'.id_tag', $tag);
+            }
+            
         }
         
         if (!empty($filtros['musicas'])) {
@@ -48,7 +51,7 @@ class Playlist extends Model {
         if (!empty($filtros['resolucao'])) {
             $busca->where(DB::connection('icivideos')->raw("substr(resolucao, locate('X', resolucao)+1)"), '>=',(int) $filtros['resolucao']);
         }
-
+// return $busca->toSql();
         $videos = $busca->get();
 
         $caminhos = array();
