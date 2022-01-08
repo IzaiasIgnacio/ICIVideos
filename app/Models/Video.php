@@ -171,9 +171,15 @@ class Video extends Model {
 				}
 			}
 
-			VideoArtista::where('id_video', $this->id)->whereNotIn('id_artista', $ids_artistas)->delete();
-			VideoMusica::where('id_video', $this->id)->whereNotIn('id_musica', $ids_musicas)->delete();
-			VideoTag::where('id_video', $this->id)->whereNotIn('id_tag', $ids_tags)->delete();
+			foreach (VideoArtista::where('id_video', $this->id)->whereNotIn('id_artista', $ids_artistas)->get() as $video_artista) {
+				$video_artista->delete();
+			}
+			foreach (VideoMusica::where('id_video', $this->id)->whereNotIn('id_musica', $ids_musicas)->get() as $video_musica) {
+				$video_musica->delete();
+			}
+			foreach (VideoTag::where('id_video', $this->id)->whereNotIn('id_tag', $ids_tags)->get() as $video_tag) {
+				$video_tag->delete();
+			}
 
 			Musica::limpar();
 			Tag::limpar();

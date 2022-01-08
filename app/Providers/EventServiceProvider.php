@@ -2,10 +2,17 @@
 
 namespace App\Providers;
 
+use App\Models\VideoArtista;
+use App\Models\VideoMusica;
+use App\Models\VideoTag;
+use App\Models\Video;
+use App\Observers\VideoArtistaObserver;
+use App\Observers\VideoMusicaObserver;
+use App\Observers\VideoTagObserver;
+use App\Observers\VideoObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -29,6 +36,10 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        VideoArtista::observe(VideoArtistaObserver::class);
+        VideoTag::observe(VideoTagObserver::class);
+        VideoMusica::observe(VideoMusicaObserver::class);        
+        Video::observe(VideoObserver::class);
+
     }
 }

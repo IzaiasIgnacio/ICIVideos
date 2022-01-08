@@ -23,7 +23,7 @@ class AjaxController extends Controller {
     
     public function refazerPlaylist(Request $request) {
         $playlist = Playlist::find($request['id']);
-        return $playlist->refazerPlaylist($playlist);
+        return $playlist->refazerPlaylist();
     }
 
     public function buscarDadosVideoModal(Request $request) {
@@ -74,9 +74,15 @@ class AjaxController extends Controller {
     public function excluirVideo($args) {
         try {
             DB::connection('icivideos')->beginTransaction();
-            VideoArtista::where('id_video', $args)->delete();
-            VideoMusica::where('id_video', $args)->delete();
-            VideoTag::where('id_video', $args)->delete();
+            foreach (VideoArtista::where('id_video', $args)->get() as $video_artista) {
+                $video_artista->delete();
+            }
+            foreach (VideoMusica::where('id_video', $args)->get() as $video_musica) {
+                $video_musica->delete();
+            }
+            foreach (VideoTag::where('id_video', $args)->get() as $video_tag) {
+                $video_tag->delete();
+            }
             VideoAudio::where('id_video', $args)->delete();
 
             for ($i=1;$i<=8;$i++) {

@@ -85,11 +85,16 @@ class Playlist extends Model {
         return 'ok';
     }
 
-    public function refazerPlaylist($playlist) {
+    public function refazerPlaylist() {
         $filtros = array_merge(
-            ['nome' => $playlist->nome],
-            json_decode($playlist->filtros, true)
+            ['nome' => $this->nome],
+            json_decode($this->filtros, true)
         );
+
+        $this->atualizar = 0;
+        $this->ultima_atualizacao = gmdate('Y-m-d H:i:s', time() + 3600*(-3+date("I")));
+        $this->save();
+
         return $this->gerarPlaylist($filtros, false);
     }
 
@@ -120,6 +125,10 @@ class Playlist extends Model {
         }
         
         return $playlist;
+    }
+
+    public static function buscarPorValor($busca) {
+        return Playlist::whereRaw('json_contains(filtros, \'"'.$busca["valor"].'"\', "$.'.$busca["campo"].'") = 1')->where('atualizar', 0)->get();
     }
     
 }

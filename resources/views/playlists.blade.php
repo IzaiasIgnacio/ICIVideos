@@ -94,6 +94,7 @@
             <th>Favoritos</th>
             <th>Músicas</th>
             <th>Resolução mínima</th>
+            <th>Atualizado em</th>
             <th>Ações</th>
         <tr>
     <thead>
@@ -108,6 +109,7 @@
             <td>{{$playlist->favoritos}}</td>
             <td>{{$playlist->musicas}}</td>
             <td>{{$playlist->resolucao}}</td>
+            <td>{{$playlist->ultima_atualizacao}}</td>
             <td class='icones' id='{{$playlist->id}}'><i class='fa fa-redo'></i></td>
         </tr>
         @endforeach

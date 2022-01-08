@@ -28,6 +28,10 @@ class IndexController extends Controller {
 
     public function exibirPlaylists() {
         $playlist = new Playlist();
+        
+        foreach (Playlist::where('atualizar', 1)->get() as $atualizar) {
+            $atualizar->refazerPlaylist();
+        }
 
         return view('index', [
             'categorias' => Categoria::get()->pluck('nome', 'id'),
