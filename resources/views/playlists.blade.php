@@ -29,9 +29,8 @@
                     <input type="checkbox" name="live" id="live" value="{{App\Models\Tipo::where('nome', 'Live')->first()->id}}"> Live
                     <input type="checkbox" name="mv" id="mv" value="{{App\Models\Tipo::where('nome', 'MV')->first()->id}}"> Mv
                     <input type="checkbox" name="misc" id="misc" value="{{App\Models\Tipo::where('nome', 'Misc')->first()->id}}"> Misc
-                    <br>
                     <input type="checkbox" name="favoritos" id="favoritos"> Favoritos
-                    <input type="checkbox" name="vertical" id="vertical"> Vertical
+                    <!-- <input type="checkbox" name="vertical" id="vertical"> Vertical -->
                 </label>
             </div>
             <div class='column is-3'>
@@ -43,24 +42,25 @@
                 <div class="control">
                     <input type='text' class='input input_form' id='fps' name='fps' placeholder='FPS'>
                 </div>
-                <label class="label">Data</label>
-                <label class="radio">
+                <label class="label">Dias</label>
+                <!-- <label class="radio">
                     <input type="radio" name="tipo_data">
                     <input type='text' class='input is-small input_form campo_data' id='data_inicial' name='data_inicial' placeholder='Data inicial'>
                     <input type='text' class='input is-small input_form campo_data' id='data_final' name='data_final' placeholder='Data final'>
                 </label>
-                <br>
-                <label class="radio">
-                    <input type="radio" name="tipo_data">
-                    <input type='text' class='input is-small input_form' id='valor_periodo' name='valor_periodo'  placeholder='X'>
-                    <div class="select is-small">
+                <br> -->
+                <!-- <label class="radio"> -->
+                    <!-- <input type="radio" name="tipo_data"> -->
+                    <input type='text' class='input is-small input_form' id='dias' name='dias' placeholder='XXX'>
+                    <!-- <div class="select is-small">
                         <select>
                             <option>Anos</option>
                             <option>Dias</option>
+                            <option>Semanas</option>
                             <option>Meses</option>
                         </select>
-                    </div>
-                </label>
+                    </div> -->
+                <!-- </label> -->
             </div>
             <div class='column is-3'>
                 <h2>Remover da playlist</h2>

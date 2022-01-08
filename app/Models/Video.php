@@ -49,7 +49,7 @@ class Video extends Model {
 							->leftJoin('tag', 'video_tag.id_tag', 'tag.id');
 
 		if (!$filtros) {
-			return $videos->groupBy('video.id')->orderByDesc('video.id')->take(100)->get();
+			return $videos->groupBy('video.id')->orderBy('musicas')->orderByDesc('video.id')->take(100)->get();
 		}
 
 		if (!empty($filtros['artistas'])) {
@@ -70,7 +70,7 @@ class Video extends Model {
 		}
 
 		if (!empty($filtros['titulo'])) {
-            $videos->whereIn('video.titulo', $filtros['titulo']);
+            $videos->where('video.titulo', 'like', '%'.$filtros['titulo'].'%');
 		}
 		
 		return $videos->groupBy('video.id')->orderByDesc('video.id')->get();
@@ -110,6 +110,7 @@ class Video extends Model {
 		if (count($musicas_titulo) > 0) {
 			$video->musicas = array_merge($video->musicas, $musicas_titulo);
 		}
+
 		$tags_titulo = $this->buscarTagsTitulo($titulo_tratado);
 		if (count($tags_titulo) > 0) {
 			$video->tags = array_merge($video->tags, $tags_titulo);
@@ -195,9 +196,12 @@ class Video extends Model {
 
 	private function buscarMusicasTitulo($titulo_tratado) {
 		$musicas = [];
-		foreach (Musica::whereRaw('length(titulo) > 2')->get()->pluck('titulo') as $musica) {
-			if (strstr(mb_strtolower($titulo_tratado), mb_strtolower($musica))) {
+		$max = 0;
+		foreach (Musica::whereRaw('length(titulo) > 2')->where('titulo', '<>', 'show')->get()->pluck('titulo') as $musica) {
+			if (strlen($musica) > $max && strstr(mb_strtolower($titulo_tratado), mb_strtolower($musica))) {
+				$musicas = [];
 				$musicas[$musica] = $musica;
+				$max = strlen($musica);
 			}
 		}
 		return $musicas;
@@ -210,6 +214,11 @@ class Video extends Model {
 				$tags[$tag] = $tag;
 			}
 		}
+
+		if (strstr(mb_strtolower($titulo_tratado), 'facecam') || strstr(mb_strtolower($titulo_tratado), 'face cam')) {
+			$tags['Fancam'] = 'Fancam';
+		}
+
 		return $tags;
 	}
 

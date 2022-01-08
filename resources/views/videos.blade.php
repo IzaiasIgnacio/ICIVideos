@@ -21,7 +21,8 @@
     <div class='column is-3'>
         <div class="field">
             <label class="label">Título</label>
-            {{Form::select('filtro_titulo', $titulos, null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}}
+            {{Form::text('filtro_titulo', null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}}
+            <!-- {{Form::select('filtro_titulo', $titulos, null, ['placeholder' => 'Título', 'id' => 'filtro_titulo'])}} -->
         </div>
     </div>
     <div class='column is-offset-9 is-3'>

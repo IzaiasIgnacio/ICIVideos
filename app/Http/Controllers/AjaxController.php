@@ -106,7 +106,7 @@ class AjaxController extends Controller {
             $video = Video::find($args);
 
             $raiz = 'K:/Vídeos/music/';
-            exec(escapeshellcmd("powershell -noprofile -command ffmpeg -i '".$raiz.$video->buscarCaminhoCompleto()."' -c copy -metadata:s:v:0 rotate=-90 '".$raiz.$video->caminho."/output.mp4'"), $retorno, $resultado);
+            exec(escapeshellcmd("powershell -noprofile -command ffmpeg -i '".$raiz.$video->buscarCaminhoCompleto()."' -c copy -metadata:s:v:0 rotate=-270 '".$raiz.$video->caminho."/output.mp4'"), $retorno, $resultado);
 
             if ($resultado == 0) {
                 Storage::disk('videos')->delete($video->buscarCaminhoCompleto());
@@ -155,6 +155,8 @@ class AjaxController extends Controller {
                 $musicas->addSelect($connection->raw('sum(video_tag.id_tag = '.$tag->id.') as "'.$tag->nome.'"'));
             }
         }
+
+        $musicas->addSelect($connection->raw('sum(video_tag.id_tag is null) as sem_tag'));
         
         $html = view('tabela_relatorio', [
             'musicas' => $musicas->get(),

@@ -6,6 +6,7 @@
             <!-- <th>MVs</th>
             <th>Lives</th> -->
             @isset($tags)
+                <th>Sem Tag</th>
                 @foreach ($tags as $tag)
                     <th>{{$tag->nome}}</th>
                 @endforeach
@@ -20,6 +21,7 @@
                 <td>{{$musica->total}}</td>
                 <!-- <td>{{$musica->mvs}}</td>
                 <td>{{$musica->lives}}</td> -->
+                <td>{{$musica->sem_tag}}</td>
                 @isset($tags)
                     @foreach ($tags as $tag)
                         @php $nome = $tag->nome @endphp

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\DB;
@@ -51,8 +52,17 @@ class Playlist extends Model {
         if (!empty($filtros['resolucao'])) {
             $busca->where(DB::connection('icivideos')->raw("substr(resolucao, locate('X', resolucao)+1)"), '>=',(int) $filtros['resolucao']);
         }
-// return $busca->toSql();
-        $videos = $busca->get();
+
+        if (!empty($filtros['dias'])) {
+            $busca->where('data_cadastro', '>=', Carbon::now()->subDays($filtros['dias'])->toDateTimeString());
+        }
+
+        if (!empty($filtros['arquivos'])) {
+            $videos = $busca->orderByDesc('id')->take($filtros['arquivos'])->get();
+        }
+        else {
+            $videos = $busca->get();
+        }
 
         $caminhos = array();
         foreach ($videos as $video) {
@@ -101,6 +111,8 @@ class Playlist extends Model {
 
         unset($filtros['favoritos']);
         unset($filtros['resolucao']);
+        unset($filtros['dias']);
+        unset($filtros['arquivos']);
         
         foreach ($filtros as $chave => $valores) {
             $classe = "\App\Models\\".ucfirst(substr($chave, 0, -1));
