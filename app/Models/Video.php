@@ -49,7 +49,7 @@ class Video extends Model {
 							->leftJoin('tag', 'video_tag.id_tag', 'tag.id');
 
 		if (!$filtros) {
-			return $videos->groupBy('video.id')->orderBy('musicas')->orderByDesc('video.id')->take(100)->get();
+			return $videos->groupBy('video.id')->orderBy('musicas')->orderByDesc('video.id')->take(200)->get();
 		}
 
 		if (!empty($filtros['artistas'])) {

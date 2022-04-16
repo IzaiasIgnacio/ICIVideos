@@ -35,6 +35,7 @@ Route::prefix('/ajax')->group(function () {
 Route::prefix('/storage')->group(function () {
     Route::get('/atualizar_videos/{novos?}', 'StorageController@atualizarVideosStorage')->name('atualizar_videos_storage');
     Route::get('/atualizar_video/{id}', 'StorageController@atualizarVideoStorage')->name('atualizar_video_storage');
+    Route::get('/remover_videos', 'StorageController@removerVideos')->name('remover_videos_storage');
 });
 
 Route::any('exportar', 'ExportarController@exportar')->name('exportar');

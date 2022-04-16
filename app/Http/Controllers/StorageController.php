@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Request;
 use \Intervention\Image\Facades\Image;
 use App\Models;
+use App\Models\Video;
 use FFMpeg;
 use BigFileTools\BigFileTools;
 
@@ -226,6 +227,19 @@ class StorageController extends Controller {
                 Storage::disk('public')->delete($arquivo);
             }
         }
+    }
+
+    public function removerVideos() {
+        $videos = Video::get();
+        foreach ($videos as $video) {
+            // echo Storage::disk('videos')->path();
+            if (!Storage::disk('videos')->exists($video->buscarCaminhoCompleto())) {
+                echo $video->buscarCaminhoCompleto();
+                echo "\r\n";
+                // $video->delete();
+            }
+        }
+        // $this->excluirCapturas();
     }
 
 }
