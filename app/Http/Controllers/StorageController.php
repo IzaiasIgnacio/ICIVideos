@@ -236,10 +236,10 @@ class StorageController extends Controller {
             if (!Storage::disk('videos')->exists($video->buscarCaminhoCompleto())) {
                 echo $video->buscarCaminhoCompleto();
                 echo "\r\n";
-                // $video->delete();
+                $video->delete();
             }
         }
-        // $this->excluirCapturas();
+        $this->excluirCapturas();
     }
 
 }
